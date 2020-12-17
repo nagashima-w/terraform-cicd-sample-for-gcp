@@ -1,0 +1,38 @@
+name: Auto Terraform Plan
+on:
+  push:
+    branches:
+      - "**"
+      - "!master"
+jobs:
+  terraform-ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform/
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: tflint
+        uses: devops-infra/action-tflint@0.1
+
+      - name: set terrraform env
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.4
+          cli_config_credentials_token: ${{ secrets.GCP_TF_TOKEN }}
+
+      - name: init
+        id: init
+        run: terraform init
+        continue-on-error: false
+
+      - name: validate
+        id: validate
+        run: terraform validate
+        continue-on-error: true
+
+      - name: plan
+        id: plan
+        run: terraform plan

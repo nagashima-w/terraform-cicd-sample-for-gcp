@@ -1,0 +1,31 @@
+name: Auto Terraform Apply
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "gcp/**"
+jobs:
+  terraform-cd:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform/
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: set terrraform env
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.4
+          cli_config_credentials_token: ${{ secrets.GCP_TF_TOKEN }}
+
+      - name: init
+        id: init
+        run: terraform init
+        continue-on-error: false
+
+      - name: apply
+        id: apply
+        run: terraform apply -auto-approve
