@@ -4,7 +4,7 @@ on:
     branches:
       - "master"
     paths:
-      - "gcp/**"
+      - "terraform/**"
 jobs:
   terraform-cd:
     runs-on: ubuntu-latest
