@@ -4,6 +4,8 @@ on:
     branches:
       - "**"
       - "!master"
+env:
+  TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
 
 jobs:
   terraform-ci:
@@ -33,9 +35,7 @@ jobs:
 
       - name: init
         id: init
-        run: |
-          export TF_VAR_project_id=${{ secrets.GCP_PROJECT_ID }}
-          terraform init
+        run: terraform init
         continue-on-error: false
 
       - name: validate
@@ -45,6 +45,4 @@ jobs:
 
       - name: plan
         id: plan
-        run: |
-          export TF_VAR_project_id=${{ secrets.GCP_PROJECT_ID }}
-          terraform plan
+        run: terraform plan
