@@ -1,6 +1,4 @@
-variable "project" {
-  default = "my-first-project"
-}
+variable "project_id" {}
 
 variable "region" {
   default = "asia-northeast1"

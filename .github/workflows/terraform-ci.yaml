@@ -25,7 +25,9 @@ jobs:
 
       - name: init
         id: init
-        run: terraform init
+        run: |
+          export TF_VAR_project_id=${{ secrets.GCP_PROJECT_ID }}
+          terraform init
         continue-on-error: false
 
       - name: validate
