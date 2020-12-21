@@ -45,6 +45,4 @@ jobs:
 
       - name: plan
         id: plan
-        run: |
-          export TF_VAR_project_id=${{ secrets.GCP_PROJECT_ID }}
-          terraform plan
+        run: terraform plan
