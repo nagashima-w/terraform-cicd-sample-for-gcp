@@ -4,6 +4,9 @@ on:
     branches:
       - "**"
       - "!master"
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform-ci.yaml"
 env:
   TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
 

@@ -5,6 +5,9 @@ on:
       - "master"
     paths:
       - "terraform/**"
+env:
+  TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
+
 jobs:
   terraform-cd:
     runs-on: ubuntu-latest
@@ -30,13 +33,9 @@ jobs:
 
       - name: init
         id: init
-        run:  |
-          export TF_VAR_project_id=${{ secrets.GCP_PROJECT_ID }}
-          terraform init
+        run: terraform init
         continue-on-error: false
 
       - name: apply
         id: apply
-        run:  |
-          export TF_VAR_project_id=${{ secrets.GCP_PROJECT_ID }}
-          terraform apply -auto-approve
+        run: terraform apply -auto-approve
